@@ -91,7 +91,7 @@ public class PruebaController {
     }
 
     // CONTROL PUNTO B (traer todas las pruebas)
-    @GetMapping()
+    @GetMapping("/listado")
     public List<Prueba> findAllPruebas() {
         return pruebaService.findAll();
     }

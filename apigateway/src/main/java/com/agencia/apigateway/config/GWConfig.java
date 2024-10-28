@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GWConfig {
 
-    @Value("${microservicio-pruebas:http://localhost:8081}")
+    @Value("${microservicio-pruebas}")
     private String uriPruebas;
 
-    @Value("${microservicio-vehiculos:http://localhost:8082}")
+    @Value("${microservicio-vehiculos}")
     private String uriVehiculos;
 
     @Bean
