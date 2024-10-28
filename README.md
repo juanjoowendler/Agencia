@@ -1,9 +1,5 @@
 # 🚗 Car Agency 
 
-## 💾 Database Structure
-
-![Car Agency Database Diagram](public/agencia-diagram.png)
-
 ### 📖 Overview
 This document outlines the database structure for a car agency. It provides details on the various tables used to manage the agency's operations, including employees, interested customers, brands, models, notifications, vehicle positions, tests, and vehicles.
 
@@ -18,5 +14,6 @@ This document outlines the database structure for a car agency. It provides deta
 - **📝 Pruebas**: Records tests conducted on vehicles, including details about the employees and interested customers involved.
 - **🚗 Vehiculos**: Contains information about the vehicles available at the agency.
 
-### 📊 Database Diagram
-The diagram above illustrates the relationships and structure of the database tables.
+## 💾 Database Structure
+
+![Car Agency Database Diagram](public/agencia-diagram.png)
