@@ -15,22 +15,30 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>apigateway</name>
 	<description>API Gateway para la Agencia</description>
-	<url/>
+	<url>https://www.tu-agencia.com</url> <!-- Completa con la URL de tu proyecto -->
 	<licenses>
-		<license/>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
 	</licenses>
 	<developers>
-		<developer/>
+		<developer>
+			<id>tu-id</id>
+			<name>Tu Nombre</name>
+			<email>tu-email@ejemplo.com</email>
+		</developer>
 	</developers>
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection>scm:git:git@github.com:tu-repo.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:tu-repo.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/tu-repo</url>
 	</scm>
 
 	<properties>
 		<java.version>21</java.version>
+		<spring-boot.version>3.3.5</spring-boot.version> <!-- Define la versión aquí -->
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
 	</properties>
 
@@ -78,6 +86,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.3.5</version> <!-- Especifica la versión aquí -->
 				<configuration>
 					<excludes>
 						<exclude>
