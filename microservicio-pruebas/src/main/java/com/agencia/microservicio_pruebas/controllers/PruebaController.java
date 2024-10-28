@@ -32,6 +32,12 @@ public class PruebaController {
     @Autowired
     private InteresadoService interesadoService;
 
+    // Estado
+    @GetMapping("/status")
+    public ResponseEntity<String> status() {
+        return ResponseEntity.ok("Microservicio pruebas ejecutandose.");
+    }
+
     // PUNTO A
     @PostMapping()
     public ResponseEntity<String> savePrueba(@RequestBody Prueba prueba) {

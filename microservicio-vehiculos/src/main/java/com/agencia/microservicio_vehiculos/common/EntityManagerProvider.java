@@ -1,4 +1,4 @@
-package com.agencia.microservicio_pruebas.common;
+package com.agencia.microservicio_vehiculos.common;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
