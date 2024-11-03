@@ -14,9 +14,8 @@ public class PruebaService {
     @Autowired
     PruebaRepository pruebaRepository;
 
-    public boolean isVehiculoInPruebasAndCumpleLimites(Vehiculo vehiculo, LocalDateTime fechaHora) {
-        List<Prueba> pruebasEnCurso = findByVehiculoAndFecha(vehiculo, fechaHora);
-        return pruebasEnCurso.isEmpty();
+    public List<Prueba> isVehiculoInPruebasAndCumpleLimites(Vehiculo vehiculo, LocalDateTime fechaHora) {
+        return findByVehiculoAndFecha(vehiculo, fechaHora);
     }
 
     public List<Prueba> findByVehiculoAndFecha(Vehiculo vehiculo, LocalDateTime fechaHora) {

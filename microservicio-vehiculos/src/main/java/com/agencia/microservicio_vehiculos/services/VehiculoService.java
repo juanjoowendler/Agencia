@@ -1,9 +1,6 @@
 package com.agencia.microservicio_vehiculos.services;
 
-import com.agencia.microservicio_vehiculos.entities.ConfiguracionResponse;
-import com.agencia.microservicio_vehiculos.entities.Posicion;
-import com.agencia.microservicio_vehiculos.entities.Vehiculo;
-import com.agencia.microservicio_vehiculos.entities.ZonaRestringida;
+import com.agencia.microservicio_vehiculos.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +16,16 @@ public class VehiculoService {
     @Autowired
     private PruebaService pruebaService;
 
+    @Autowired
+    private NotificacionService notificacionService;
+
     public String evaluarPosicion(Posicion posicion) {
         Vehiculo vehiculo = posicion.getVehiculo();
         LocalDateTime fechaHora = LocalDateTime.parse(posicion.getFechaHora());
-
-        if (!pruebaService.isVehiculoInPruebasAndCumpleLimites(vehiculo, fechaHora)) {
+        List<Prueba> pruebas = pruebaService.isVehiculoInPruebasAndCumpleLimites(vehiculo, fechaHora);
+        if (!pruebas.isEmpty()) {
+            Prueba prueba = pruebas.get(0);
+            Empleado empleado = prueba.getEmpleado();
             double latitud = posicion.getLatitud();
             double longitud = posicion.getLongitud();
 
@@ -38,6 +40,12 @@ public class VehiculoService {
             // Comprobar si la posición está fuera del radio
             if (latitud < (latAgencia - radioLatitudGrados) || latitud > (latAgencia + radioLatitudGrados) ||
                     longitud < (lonAgencia - radioLongitudGrados) || longitud > (lonAgencia + radioLongitudGrados)) {
+
+                Notificacion notificacion = new Notificacion();
+                notificacion.setLegajo(empleado.getLegajo());
+                notificacion.setDescripcion("El vehiculo se encuentra fuera del radio permitido. Debe regresar.");
+                notificacionService.saveNotificacion(notificacion);
+
                 return "El vehiculo se encuentra fuera del radio permitido de 5 km alrededor de la Agencia.";
             }
 
@@ -51,6 +59,11 @@ public class VehiculoService {
 
                 // Comprobar si la posición está dentro de la zona restringida
                 if (latitud <= latNoroeste && latitud >= latSureste && longitud <= lonSureste && longitud >= lonNoroeste) {
+                    prueba.getInteresado().setRestringido(true);
+                    Notificacion notificacion = new Notificacion();
+                    notificacion.setLegajo(empleado.getLegajo());
+                    notificacion.setDescripcion("El vehiculo se encuentra en una zona restringida. Debe regresar.");
+                    notificacionService.saveNotificacion(notificacion);
                     return "El vehiculo se encuentra en una prueba y su posición está dentro de una zona restringida.";
                 }
             }

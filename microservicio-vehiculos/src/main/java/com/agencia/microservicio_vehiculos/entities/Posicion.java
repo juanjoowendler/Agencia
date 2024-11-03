@@ -27,6 +27,7 @@ public class Posicion {
     @Column(name = "LONGITUD")
     private double longitud;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "ID_VEHICULO", nullable = false)
     private Vehiculo vehiculo;
