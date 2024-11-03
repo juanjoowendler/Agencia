@@ -17,3 +17,20 @@ This document outlines the database structure for a car agency. It provides deta
 ## 💾 Database Structure
 
 ![Car Agency Database Diagram](public/agencia-diagram.png)
+
+## 🌍 Restricted Zones and Allowed Radius
+
+This section provides visuals illustrating the restricted zones and the radius within which vehicles are permitted to operate.
+
+###  🚫 Restricted Zones
+![Restricted Zones](public/google-earth/zonas-restringidas.jpg)
+
+*This image shows the general layout of the restricted zones within the agency's operational area, highlighting where vehicles are not allowed to operate.*
+
+### 🟢 Allowed Radius
+![Allowed Radius](public/google-earth/radio-adminito.jpg)
+
+*This graphic depicts the radius within which vehicles are authorized to operate in relation to the agency. It outlines the permissible area surrounding the agency.*
+
+For more detailed geographic information, visit [Google Earth](https://earth.google.com/earth/d/1MhR_sH8E4Rkww0rtBbOarKmjkQdc1RNU?usp=sharing). 🔗
+
