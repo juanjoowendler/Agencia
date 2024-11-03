@@ -23,6 +23,7 @@ public class Notificacion {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @ToString.Exclude
     @OneToMany
     private List<Empleado> empleados;
 }

@@ -1,5 +1,6 @@
 package com.agencia.microservicio_pruebas.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,5 +30,7 @@ public class Posicion {
 
     @ManyToOne
     @JoinColumn(name = "ID_VEHICULO", nullable = false)
+    @JsonIgnore
+    @ToString.Exclude
     private Vehiculo vehiculo;
 }
