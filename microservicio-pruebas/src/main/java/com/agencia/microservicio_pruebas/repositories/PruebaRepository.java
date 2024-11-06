@@ -20,4 +20,13 @@ public interface PruebaRepository extends CrudRepository<Prueba, Long> {
 
     @Query("SELECT p FROM Prueba p WHERE p.fechaHoraInicio <= :fechaActual AND p.fechaHoraFin >= :fechaActual")
     List<Prueba> findAllEnCurso(@Param("fechaActual") LocalDateTime fechaActual);
+
+    @Query("SELECT p FROM Prueba p, Empleado e, Notificacion n, Vehiculo v, Interesado i " +
+            "WHERE p.empleado.legajo = e.legajo " +
+            "AND n.legajo = e.legajo " +
+            "AND p.interesado.id = i.id " +
+            "AND p.vehiculo.id = v.id " +
+            "AND n.descripcion IS NOT NULL")
+    List<Prueba> findIncidentes();
+
 }

@@ -2,11 +2,14 @@ package com.agencia.microservicio_pruebas.controllers;
 
 import com.agencia.microservicio_pruebas.entities.Prueba;
 import com.agencia.microservicio_pruebas.services.PruebaService;
+import com.agencia.microservicio_pruebas.services.ReporteService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,6 +19,9 @@ public class PruebaController {
 
     @Autowired
     private PruebaService pruebaService;
+
+    @Autowired
+    private ReporteService reporteService;
 
     @GetMapping("/status")
     public ResponseEntity<String> status() {
@@ -64,5 +70,22 @@ public class PruebaController {
         pruebaService.savePrueba(prueba);
 
         return ResponseEntity.ok("Prueba finalizada exitosamente.");
+    }
+
+    // REPORTE
+
+    // Incidentes
+
+    @GetMapping("/reporte/incidentes")
+    public void generarReporteIncidentes(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=Reporte_Incidentes.xlsx");
+
+        // Obtener los incidentes
+        List<Prueba> incidentes = pruebaService.findIncidentes();
+
+        // Generar el reporte y escribirlo en la respuesta HTTP
+        byte[] excelData = reporteService.generarReporteIncidentes(incidentes);
+        response.getOutputStream().write(excelData);
     }
 }

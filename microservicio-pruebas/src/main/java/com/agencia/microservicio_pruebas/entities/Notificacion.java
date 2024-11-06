@@ -20,10 +20,9 @@ public class Notificacion {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "descripcion")
+    @Column(name = "DESCRIPCION")
     private String descripcion;
 
-    @ToString.Exclude
-    @OneToMany
-    private List<Empleado> empleados;
+    @Column(name = "LEGAJO")
+    private Long legajo;
 }

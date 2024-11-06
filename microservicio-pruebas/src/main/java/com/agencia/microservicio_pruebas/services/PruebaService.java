@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PruebaService {
@@ -113,5 +114,10 @@ public class PruebaService {
         }
 
         return null;
+    }
+
+    // Reporte incidentes
+    public List<Prueba> findIncidentes() {
+        return pruebaRepository.findIncidentes();
     }
 }
