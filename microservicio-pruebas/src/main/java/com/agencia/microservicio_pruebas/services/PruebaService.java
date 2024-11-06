@@ -75,16 +75,16 @@ public class PruebaService {
         prueba.setActiva(true);
 
         List<Posicion> posiciones = vehiculo.getPosiciones();
-        if (posiciones == null) {
-            Posicion posicionInicial = new Posicion();
-            posicionInicial.setVehiculo(vehiculo);
-            posicionInicial.setFechaHora(prueba.getFechaHoraInicio());
-            posicionInicial.setLatitud(42.50886738457441);
-            posicionInicial.setLongitud(1.5347139324337429);
-            posiciones.add(posicionInicial);
-            vehiculo.setPosiciones(posiciones);
-            posicionService.savePosicion(posicionInicial);
-        }
+
+        Posicion posicionInicial = new Posicion();
+        posicionInicial.setVehiculo(vehiculo);
+        posicionInicial.setFechaHora(prueba.getFechaHoraInicio());
+        posicionInicial.setLatitud(42.50886738457441);
+        posicionInicial.setLongitud(1.5347139324337429);
+        posiciones.add(posicionInicial);
+        vehiculo.setPosiciones(posiciones);
+        posicionService.savePosicion(posicionInicial);
+
 
         // Validaciones adicionales
         if (interesado.isRestringido()) {
