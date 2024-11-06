@@ -32,6 +32,9 @@ public class Prueba {
     @Column(name = "COMENTARIOS")
     private String comentarios;
 
+    @Column(name = "ACTIVA")
+    private boolean activa;
+
     @ManyToOne
     @JoinColumn(name = "ID_EMPLEADO", nullable = false)
     private Empleado empleado;

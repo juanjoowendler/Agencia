@@ -21,7 +21,7 @@ public class VehiculoService {
 
     public String evaluarPosicion(Posicion posicion) {
         Vehiculo vehiculo = posicion.getVehiculo();
-        LocalDateTime fechaHora = LocalDateTime.parse(posicion.getFechaHora());
+        LocalDateTime fechaHora = posicion.getFechaHora();
         List<Prueba> pruebas = pruebaService.isVehiculoInPruebasAndCumpleLimites(vehiculo, fechaHora);
         if (!pruebas.isEmpty()) {
             Prueba prueba = pruebas.get(0);

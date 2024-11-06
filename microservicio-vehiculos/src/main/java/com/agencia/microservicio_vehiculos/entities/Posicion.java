@@ -1,10 +1,13 @@
 package com.agencia.microservicio_vehiculos.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Posiciones")
@@ -19,7 +22,8 @@ public class Posicion {
     private Long id;
 
     @Column(name = "FECHA_HORA")
-    private String fechaHora;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime fechaHora;
 
     @Column(name = "LATITUD")
     private double latitud;

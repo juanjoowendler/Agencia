@@ -16,7 +16,8 @@ public interface PruebaRepository extends CrudRepository<Prueba, Long> {
             "WHERE d.vehiculo.id = v.id " +
             "AND v.id = p.vehiculo.id " +
             "AND p.vehiculo = :vehiculo " +
-            "AND :fechaHora BETWEEN p.fechaHoraInicio AND p.fechaHoraFin")
+            "AND :fechaHora BETWEEN p.fechaHoraInicio AND p.fechaHoraFin " +
+            "AND p.activa = true")
     List<Prueba> findByVehiculoAndFecha(
             @Param("vehiculo") Vehiculo vehiculo,
             @Param("fechaHora") LocalDateTime fechaHora);
