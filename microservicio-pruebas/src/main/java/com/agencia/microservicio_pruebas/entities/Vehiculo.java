@@ -1,5 +1,6 @@
 package com.agencia.microservicio_pruebas.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class Vehiculo {
     @JoinColumn(name = "ID_MODELO", nullable = false)
     private Modelo modelo;
 
-    @OneToMany(mappedBy = "vehiculo")
-    private List<Posicion> posiciones;
+    @ManyToOne
+    @JoinColumn(name = "ID_POSICION", nullable = false)
+    private Posicion posicion;
 }

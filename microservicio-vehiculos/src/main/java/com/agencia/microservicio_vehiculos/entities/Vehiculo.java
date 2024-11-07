@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @Entity
 @Table(name = "Vehiculos")
 @Data
@@ -30,6 +28,7 @@ public class Vehiculo {
     @JoinColumn(name = "ID_MODELO", nullable = false)
     private Modelo modelo;
 
-    @OneToMany(mappedBy = "vehiculo")
-    private List<Posicion> posiciones;
+    @ManyToOne
+    @JoinColumn(name = "ID_POSICION", nullable = false)
+    private Posicion posicion;
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Posiciones")
@@ -31,10 +32,4 @@ public class Posicion {
 
     @Column(name = "LONGITUD")
     private double longitud;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_VEHICULO", nullable = false)
-    @JsonIgnore
-    @ToString.Exclude
-    private Vehiculo vehiculo;
 }

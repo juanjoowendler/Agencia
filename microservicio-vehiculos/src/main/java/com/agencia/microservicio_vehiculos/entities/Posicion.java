@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Posiciones")
@@ -30,9 +31,4 @@ public class Posicion {
 
     @Column(name = "LONGITUD")
     private double longitud;
-
-    @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "ID_VEHICULO", nullable = false)
-    private Vehiculo vehiculo;
 }

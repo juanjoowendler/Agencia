@@ -2,6 +2,8 @@ package com.agencia.microservicio_vehiculos.controller;
 
 import com.agencia.microservicio_vehiculos.entities.ConfiguracionResponse;
 import com.agencia.microservicio_vehiculos.entities.Posicion;
+import com.agencia.microservicio_vehiculos.entities.Vehiculo;
+import com.agencia.microservicio_vehiculos.entities.VehiculoPosicion;
 import com.agencia.microservicio_vehiculos.services.ConfiguracionService;
 import com.agencia.microservicio_vehiculos.services.VehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,11 @@ public class VehiculoController {
 
     // PUNTO D
     @PostMapping("/evaluar")
-    public ResponseEntity<String> evaluarPosicion(@RequestBody Posicion posicion) {
-        String resultado = vehiculoService.evaluarPosicion(posicion);
+    public ResponseEntity<String> evaluarPosicion(@RequestBody VehiculoPosicion request) {
+        Posicion posicion = request.getPosicion();
+        Vehiculo vehiculo = request.getVehiculo();
+
+        String resultado = vehiculoService.evaluarPosicion(posicion, vehiculo);
 
         return ResponseEntity.ok(resultado);
     }

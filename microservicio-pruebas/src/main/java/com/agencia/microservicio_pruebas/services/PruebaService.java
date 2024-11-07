@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,18 +75,6 @@ public class PruebaService {
         prueba.setInteresado(interesado);
         prueba.setVehiculo(vehiculo);
         prueba.setActiva(true);
-
-        List<Posicion> posiciones = vehiculo.getPosiciones();
-
-        Posicion posicionInicial = new Posicion();
-        posicionInicial.setVehiculo(vehiculo);
-        posicionInicial.setFechaHora(prueba.getFechaHoraInicio());
-        posicionInicial.setLatitud(42.50886738457441);
-        posicionInicial.setLongitud(1.5347139324337429);
-        posiciones.add(posicionInicial);
-        vehiculo.setPosiciones(posiciones);
-        posicionService.savePosicion(posicionInicial);
-
 
         // Validaciones adicionales
         if (interesado.isRestringido()) {

@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface PruebaRepository extends CrudRepository<Prueba, Long> {
     @Query("SELECT p FROM Prueba p, Vehiculo v, Posicion d " +
-            "WHERE d.vehiculo.id = v.id " +
+            "WHERE v.posicion.id = d.id " +
             "AND v.id = p.vehiculo.id " +
             "AND p.vehiculo = :vehiculo " +
             "AND :fechaHora BETWEEN p.fechaHoraInicio AND p.fechaHoraFin " +

@@ -3,6 +3,7 @@ package com.agencia.microservicio_vehiculos.services;
 import com.agencia.microservicio_vehiculos.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,8 +20,7 @@ public class VehiculoService {
     @Autowired
     private NotificacionService notificacionService;
 
-    public String evaluarPosicion(Posicion posicion) {
-        Vehiculo vehiculo = posicion.getVehiculo();
+    public String evaluarPosicion(Posicion posicion, Vehiculo vehiculo) {
         LocalDateTime fechaHora = posicion.getFechaHora();
         List<Prueba> pruebas = pruebaService.isVehiculoInPruebasAndCumpleLimites(vehiculo, fechaHora);
         if (!pruebas.isEmpty()) {
