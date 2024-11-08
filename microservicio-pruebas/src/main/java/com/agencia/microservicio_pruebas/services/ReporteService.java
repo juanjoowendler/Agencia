@@ -1,6 +1,6 @@
 package com.agencia.microservicio_pruebas.services;
 
-import com.agencia.microservicio_pruebas.entities.Prueba;
+import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
@@ -12,49 +12,38 @@ import java.util.List;
 @Service
 public class ReporteService {
 
-    public byte[] generarReporteIncidentes(List<Prueba> incidentes) throws IOException {
+    public byte[] generarReporteIncidentes(List<IncidentesDTO> incidentes) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Incidentes");
 
-        // Crear columnas excel
+        // Crear columnas excel en el orden correcto según la consulta SQL
         Row headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("Patente Vehículo");
-        headerRow.createCell(1).setCellValue("Tipo Documento");
-        headerRow.createCell(2).setCellValue("Documento Interesado");
-        headerRow.createCell(3).setCellValue("Nombre Interesado");
-        headerRow.createCell(4).setCellValue("Apellido Interesado");
-        headerRow.createCell(5).setCellValue("Restringido");
-        headerRow.createCell(6).setCellValue("Legajo Empleado");
-        headerRow.createCell(7).setCellValue("Nombre Empleado");
-        headerRow.createCell(8).setCellValue("Apellido Empleado");
-        headerRow.createCell(9).setCellValue("Fecha Hora Inicio");
-        headerRow.createCell(10).setCellValue("Fecha Hora Fin");
-        headerRow.createCell(11).setCellValue("Activa");
-        headerRow.createCell(12).setCellValue("Comentarios");
+        headerRow.createCell(0).setCellValue("ID Incidente");
+        headerRow.createCell(1).setCellValue("Fecha Hora Inicio");
+        headerRow.createCell(2).setCellValue("Fecha Hora Fin");
+        headerRow.createCell(3).setCellValue("Legajo Empleado");
+        headerRow.createCell(4).setCellValue("Apellido Empleado");
+        headerRow.createCell(5).setCellValue("Nombre Empleado");
+        headerRow.createCell(6).setCellValue("Apellido Interesado");
+        headerRow.createCell(7).setCellValue("Nombre Interesado");
+        headerRow.createCell(8).setCellValue("Descripción Notificación");
+        headerRow.createCell(9).setCellValue("Patente Vehículo");
 
-        // Poblar los datos de incidentes
+        // Poblar los datos de incidentes en el orden correcto
         int rowNum = 1;
-        for (Prueba prueba : incidentes) {
+        for (IncidentesDTO incidente : incidentes) {
             Row row = sheet.createRow(rowNum++);
 
-            row.createCell(0).setCellValue(prueba.getVehiculo().getPatente());
-            row.createCell(1).setCellValue(prueba.getInteresado().getTipoDocumento());
-            row.createCell(2).setCellValue(prueba.getInteresado().getDocumento());
-            row.createCell(3).setCellValue(prueba.getInteresado().getNombre());
-            row.createCell(4).setCellValue(prueba.getInteresado().getApellido());
-            row.createCell(5).setCellValue(prueba.getInteresado().isRestringido() ? "Sí" : "No");
-            row.createCell(6).setCellValue(prueba.getEmpleado().getLegajo());
-            row.createCell(7).setCellValue(prueba.getEmpleado().getNombre());
-            row.createCell(8).setCellValue(prueba.getEmpleado().getApellido());
-            row.createCell(9).setCellValue(prueba.getFechaHoraInicio().toString());
-            row.createCell(10).setCellValue(prueba.getFechaHoraFin().toString());
-            row.createCell(11).setCellValue(prueba.isActiva() ? "Sí" : "No");
-            row.createCell(12).setCellValue(prueba.getComentarios());
-        }
-
-        // Acomodar filas del excel
-        for (int i = 0; i <= 12; i++) {
-            sheet.autoSizeColumn(i);
+            row.createCell(0).setCellValue(incidente.getId()); // ID Incidente
+            row.createCell(1).setCellValue(incidente.getFechaHoraInicio().toString()); // Fecha Hora Inicio
+            row.createCell(2).setCellValue(incidente.getFechaHoraFin().toString()); // Fecha Hora Fin
+            row.createCell(3).setCellValue(incidente.getLegajoEmpleado()); // Legajo Empleado
+            row.createCell(4).setCellValue(incidente.getApellidoEmpleado()); // Apellido Empleado
+            row.createCell(5).setCellValue(incidente.getNombreEmpleado()); // Nombre Empleado
+            row.createCell(6).setCellValue(incidente.getApellidoInteresado()); // Apellido Interesado
+            row.createCell(7).setCellValue(incidente.getNombreInteresado()); // Nombre Interesado
+            row.createCell(8).setCellValue(incidente.getDescripcionNotificacion()); // Descripción Notificación
+            row.createCell(9).setCellValue(incidente.getPatenteVehiculo()); // Patente Vehículo
         }
 
         // Escribir el archivo en Bytes para poder convertirlo a un Excel

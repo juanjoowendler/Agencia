@@ -1,5 +1,6 @@
 package com.agencia.microservicio_pruebas.controllers;
 
+import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
 import com.agencia.microservicio_pruebas.entities.Prueba;
 import com.agencia.microservicio_pruebas.services.PruebaService;
 import com.agencia.microservicio_pruebas.services.ReporteService;
@@ -82,7 +83,7 @@ public class PruebaController {
         response.setHeader("Content-Disposition", "attachment; filename=Reporte_Incidentes.xlsx");
 
         // Obtener los incidentes
-        List<Prueba> incidentes = pruebaService.findIncidentes();
+        List<IncidentesDTO> incidentes = pruebaService.findIncidentes();
 
         // Generar el reporte y escribirlo en la respuesta HTTP
         byte[] excelData = reporteService.generarReporteIncidentes(incidentes);

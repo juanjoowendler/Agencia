@@ -1,5 +1,6 @@
 package com.agencia.microservicio_pruebas.services;
 
+import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
 import com.agencia.microservicio_pruebas.entities.*;
 import com.agencia.microservicio_pruebas.repositories.PruebaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +107,7 @@ public class PruebaService {
     }
 
     // Reporte incidentes
-    public List<Prueba> findIncidentes() {
+    public List<IncidentesDTO> findIncidentes() {
         return pruebaRepository.findIncidentes();
     }
 }
