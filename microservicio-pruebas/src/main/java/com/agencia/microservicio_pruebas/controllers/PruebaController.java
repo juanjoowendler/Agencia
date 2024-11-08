@@ -1,6 +1,7 @@
 package com.agencia.microservicio_pruebas.controllers;
 
 import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
+import com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO;
 import com.agencia.microservicio_pruebas.entities.Prueba;
 import com.agencia.microservicio_pruebas.services.PruebaService;
 import com.agencia.microservicio_pruebas.services.ReporteService;
@@ -89,4 +90,19 @@ public class PruebaController {
         byte[] excelData = reporteService.generarReporteIncidentes(incidentes);
         response.getOutputStream().write(excelData);
     }
+
+    // Incidentes para un Empleado
+    @GetMapping("/reporte/incidentes/{id}")
+    public void generarReporteIncidentesParaUnEmpleado(@PathVariable("id") Long legajo, HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=Reporte_Incidentes_Empleado_" + legajo + ".xlsx");
+
+        // Obtener los incidentes específicos del empleado
+        List<IncidentesEmpleadoDTO> incidentesEmpleado = pruebaService.findIncidentesParaUnEmpleado(legajo);
+
+        // Generar el reporte y escribirlo en la respuesta HTTP
+        byte[] excelData = reporteService.generarReporteIncidentesParaUnEmpleado(incidentesEmpleado);
+        response.getOutputStream().write(excelData);
+    }
+
 }

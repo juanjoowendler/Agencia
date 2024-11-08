@@ -1,6 +1,7 @@
 package com.agencia.microservicio_pruebas.repositories;
 
 import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
+import com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO;
 import com.agencia.microservicio_pruebas.entities.Prueba;
 import com.agencia.microservicio_pruebas.entities.Vehiculo;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +23,9 @@ public interface PruebaRepository extends CrudRepository<Prueba, Long> {
     @Query("SELECT p FROM Prueba p WHERE p.fechaHoraInicio <= :fechaActual AND p.fechaHoraFin >= :fechaActual")
     List<Prueba> findAllEnCurso(@Param("fechaActual") LocalDateTime fechaActual);
 
+    // REPORTE
+
+    // Incidentes
     @Query("SELECT new com.agencia.microservicio_pruebas.dtos.IncidentesDTO(" +
             "p.id, p.fechaHoraInicio, p.fechaHoraFin, " +
             "e.legajo, e.apellido, e.nombre, " +
@@ -33,6 +37,25 @@ public interface PruebaRepository extends CrudRepository<Prueba, Long> {
             "JOIN Vehiculo v ON p.vehiculo.id = v.id " +
             "WHERE n.descripcion IS NOT NULL")
     List<IncidentesDTO> findIncidentes();
+
+    // Incidentes para un Empleado
+    @Query("SELECT new com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO(" +
+            "p.id, " +
+            "e.legajo, " +
+            "e.apellido, " +
+            "e.nombre, " +
+            "e.telefonoContacto, " +
+            "v.patente, " +
+            "n.descripcion, " +
+            "COUNT(n.descripcion)) " +
+            "FROM Prueba p " +
+            "JOIN Empleado e ON p.empleado.id = e.legajo " +
+            "JOIN Notificacion n ON n.legajo = e.legajo " +
+            "JOIN Vehiculo v ON p.vehiculo.id = v.id " +
+            "WHERE n.descripcion IS NOT NULL " +
+            "AND e.legajo = :legajo " +
+            "GROUP BY e.legajo, n.descripcion")
+    List<IncidentesEmpleadoDTO> findIncidentesParaUnEmpleado(@Param("legajo") Long legajo);
 
 
 }

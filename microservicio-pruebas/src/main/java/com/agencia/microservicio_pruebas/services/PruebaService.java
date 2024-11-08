@@ -1,15 +1,14 @@
 package com.agencia.microservicio_pruebas.services;
 
 import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
+import com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO;
 import com.agencia.microservicio_pruebas.entities.*;
 import com.agencia.microservicio_pruebas.repositories.PruebaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PruebaService {
@@ -106,8 +105,13 @@ public class PruebaService {
         return null;
     }
 
-    // Reporte incidentes
+    // Reporte Incidentes
     public List<IncidentesDTO> findIncidentes() {
         return pruebaRepository.findIncidentes();
+    }
+
+    // Reporte Incidentes para un Empleado
+    public List<IncidentesEmpleadoDTO> findIncidentesParaUnEmpleado(Long legajo) {
+        return pruebaRepository.findIncidentesParaUnEmpleado(legajo);
     }
 }
