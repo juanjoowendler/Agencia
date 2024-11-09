@@ -66,28 +66,24 @@ public class ReporteService {
 
         // Crear la fila de encabezado con los nombres de las columnas
         Row headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("ID Prueba");
-        headerRow.createCell(1).setCellValue("Legajo");
-        headerRow.createCell(2).setCellValue("Apellido Empleado");
-        headerRow.createCell(3).setCellValue("Nombre Empleado");
-        headerRow.createCell(4).setCellValue("Teléfono Contacto");
-        headerRow.createCell(5).setCellValue("Patente Vehículo");
-        headerRow.createCell(6).setCellValue("Incidente");
-        headerRow.createCell(7).setCellValue("Cantidad de Incidentes");
+        headerRow.createCell(0).setCellValue("Legajo");
+        headerRow.createCell(1).setCellValue("Apellido Empleado");
+        headerRow.createCell(2).setCellValue("Nombre Empleado");
+        headerRow.createCell(3).setCellValue("Teléfono Contacto");
+        headerRow.createCell(4).setCellValue("Patente Vehículo");
+        headerRow.createCell(5).setCellValue("Incidente");
 
         // Poblar los datos de los incidentes del empleado en el reporte
         int rowNum = 1;
         for (IncidentesEmpleadoDTO incidente : incidentesEmpleado) {
             Row row = sheet.createRow(rowNum++);
 
-            row.createCell(0).setCellValue(incidente.getIdPrueba()); // ID Prueba
-            row.createCell(1).setCellValue(incidente.getLegajo()); // Legajo
-            row.createCell(2).setCellValue(incidente.getEmpleadoApellido()); // Apellido Empleado
-            row.createCell(3).setCellValue(incidente.getEmpleadoNombre()); // Nombre Empleado
-            row.createCell(4).setCellValue(incidente.getTelefonoContacto()); // Teléfono Contacto
-            row.createCell(5).setCellValue(incidente.getPatente()); // Patente Vehículo
-            row.createCell(6).setCellValue(incidente.getIncidente()); // Incidente
-            row.createCell(7).setCellValue(incidente.getCantidadIncidentes()); // Cantidad de Incidentes
+            row.createCell(0).setCellValue(incidente.getLegajo()); // Legajo
+            row.createCell(1).setCellValue(incidente.getEmpleadoApellido()); // Apellido Empleado
+            row.createCell(2).setCellValue(incidente.getEmpleadoNombre()); // Nombre Empleado
+            row.createCell(3).setCellValue(incidente.getTelefonoContacto()); // Teléfono Contacto
+            row.createCell(4).setCellValue(incidente.getPatente()); // Patente Vehículo
+            row.createCell(5).setCellValue(incidente.getIncidente()); // Incidente
         }
 
         // Escribir el archivo en Bytes para poder convertirlo a un Excel

@@ -40,21 +40,20 @@ public interface PruebaRepository extends CrudRepository<Prueba, Long> {
 
     // Incidentes para un Empleado
     @Query("SELECT new com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO(" +
-            "p.id, " +
             "e.legajo, " +
             "e.apellido, " +
             "e.nombre, " +
             "e.telefonoContacto, " +
             "v.patente, " +
-            "n.descripcion, " +
-            "COUNT(n.descripcion)) " +
+            "n.descripcion) " +
             "FROM Prueba p " +
             "JOIN Empleado e ON p.empleado.id = e.legajo " +
             "JOIN Notificacion n ON n.legajo = e.legajo " +
             "JOIN Vehiculo v ON p.vehiculo.id = v.id " +
             "WHERE n.descripcion IS NOT NULL " +
+            "AND (n.descripcion LIKE '%radio%' OR n.descripcion LIKE '%restringida%') " +
             "AND e.legajo = :legajo " +
-            "GROUP BY e.legajo, n.descripcion")
+            "GROUP BY n.descripcion, e.legajo")
     List<IncidentesEmpleadoDTO> findIncidentesParaUnEmpleado(@Param("legajo") Long legajo);
 
 
