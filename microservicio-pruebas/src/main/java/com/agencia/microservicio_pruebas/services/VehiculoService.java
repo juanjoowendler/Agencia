@@ -1,5 +1,6 @@
 package com.agencia.microservicio_pruebas.services;
 
+import com.agencia.microservicio_pruebas.dtos.DetallesPruebaVehiculoDTO;
 import com.agencia.microservicio_pruebas.dtos.KmRegistradosPorVehiculoDTO;
 import com.agencia.microservicio_pruebas.entities.Vehiculo;
 import com.agencia.microservicio_pruebas.repositories.VehiculoRepository;
@@ -21,5 +22,10 @@ public class VehiculoService {
     // Km recorridos por un vehiculo en un periodo determinado
     public List<KmRegistradosPorVehiculoDTO> findKmRegistradosByVehicle(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Long idVehiculo) {
         return vehiculoRepository.findKmRegistradosByVehicle(fechaHoraInicio, fechaHoraFin, idVehiculo);
+    }
+
+    // Detalle de pruebas para un vehiculo
+    public List<DetallesPruebaVehiculoDTO> findPruebasByVehiculoId(Long idVehiculo) {
+        return vehiculoRepository.findPruebasByVehiculoId(idVehiculo);
     }
 }

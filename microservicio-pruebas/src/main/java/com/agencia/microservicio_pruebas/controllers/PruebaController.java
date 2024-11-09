@@ -1,5 +1,6 @@
 package com.agencia.microservicio_pruebas.controllers;
 
+import com.agencia.microservicio_pruebas.dtos.DetallesPruebaVehiculoDTO;
 import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
 import com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO;
 import com.agencia.microservicio_pruebas.dtos.KmRegistradosPorVehiculoDTO;
@@ -132,5 +133,24 @@ public class PruebaController {
         byte[] excelData = reporteService.generarReporteKmPorVehiculo(kmRegistrados);
         response.getOutputStream().write(excelData);
     }
+
+    // Detalle de pruebas para un vehiculo
+    @GetMapping("/reporte/detalle-vehiculo/{id}")
+    public void generarReportePruebasVehiculo(
+            @PathVariable("id") Long idVehiculo,
+            HttpServletResponse response) throws IOException {
+
+        // Ejecuta la consulta para obtener las pruebas del vehículo
+        List<DetallesPruebaVehiculoDTO> pruebas = vehiculoService.findPruebasByVehiculoId(idVehiculo);
+
+        // Configura la respuesta HTTP para el archivo Excel
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=Reporte_Pruebas_Vehiculo_" + idVehiculo + ".xlsx");
+
+        // Genera el archivo Excel y escribe en la respuesta HTTP
+        byte[] excelData = reporteService.generarReportePruebasVehiculo(pruebas);
+        response.getOutputStream().write(excelData);
+    }
+
 
 }

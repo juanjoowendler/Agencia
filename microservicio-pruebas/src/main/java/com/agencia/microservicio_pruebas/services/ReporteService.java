@@ -1,5 +1,6 @@
 package com.agencia.microservicio_pruebas.services;
 
+import com.agencia.microservicio_pruebas.dtos.DetallesPruebaVehiculoDTO;
 import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
 import com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO;
 import com.agencia.microservicio_pruebas.dtos.KmRegistradosPorVehiculoDTO;
@@ -133,4 +134,58 @@ public class ReporteService {
             return outputStream.toByteArray();
         }
     }
+
+    // Detalle de pruebas para un vehiculo
+    public byte[] generarReportePruebasVehiculo(List<DetallesPruebaVehiculoDTO> pruebas) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Pruebas Vehículo");
+
+        // Encabezado
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("ID Vehículo");
+        headerRow.createCell(1).setCellValue("Patente");
+        headerRow.createCell(2).setCellValue("Modelo");
+        headerRow.createCell(3).setCellValue("Marca");
+        headerRow.createCell(4).setCellValue("Fecha Hora Inicio");
+        headerRow.createCell(5).setCellValue("Fecha Hora Fin");
+        headerRow.createCell(6).setCellValue("Tipo Documento");
+        headerRow.createCell(7).setCellValue("Documento");
+        headerRow.createCell(8).setCellValue("Apellido Interesado");
+        headerRow.createCell(9).setCellValue("Nombre Interesado");
+        headerRow.createCell(10).setCellValue("Nro Licencia");
+        headerRow.createCell(11).setCellValue("Vencimiento Licencia");
+        headerRow.createCell(12).setCellValue("Legajo Empleado");
+        headerRow.createCell(13).setCellValue("Apellido Empleado");
+        headerRow.createCell(14).setCellValue("Nombre Empleado");
+        headerRow.createCell(15).setCellValue("Comentarios");
+
+        // Llenar datos de las pruebas
+        int rowNum = 1;
+        for (DetallesPruebaVehiculoDTO prueba : pruebas) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(prueba.getVehiculoId());
+            row.createCell(1).setCellValue(prueba.getPatente());
+            row.createCell(2).setCellValue(prueba.getDescripcionModelo());
+            row.createCell(3).setCellValue(prueba.getNombreMarca());
+            row.createCell(4).setCellValue(prueba.getFechaHoraInicio().toString());
+            row.createCell(5).setCellValue(prueba.getFechaHoraFin().toString());
+            row.createCell(6).setCellValue(prueba.getTipoDocumentoInteresado());
+            row.createCell(7).setCellValue(prueba.getDocumentoInteresado());
+            row.createCell(8).setCellValue(prueba.getApellidoInteresado());
+            row.createCell(9).setCellValue(prueba.getNombreInteresado());
+            row.createCell(10).setCellValue(prueba.getNroLicenciaInteresado());
+            row.createCell(11).setCellValue(prueba.getFechaVencimientoLicencia().toString());
+            row.createCell(12).setCellValue(prueba.getLegajoEmpleado());
+            row.createCell(13).setCellValue(prueba.getApellidoEmpleado());
+            row.createCell(14).setCellValue(prueba.getNombreEmpleado());
+            row.createCell(15).setCellValue(prueba.getComentarios());
+        }
+
+        // Convertir a byte[] para escribir en la respuesta HTTP
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            workbook.write(outputStream);
+            return outputStream.toByteArray();
+        }
+    }
+
 }
