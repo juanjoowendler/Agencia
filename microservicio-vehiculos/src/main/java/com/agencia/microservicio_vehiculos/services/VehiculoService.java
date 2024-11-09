@@ -37,6 +37,8 @@ public class VehiculoService {
             double radioLatitudGrados = radioAdmitidoKm / 111.0;
             double radioLongitudGrados = radioAdmitidoKm / (111.0 * Math.cos(Math.toRadians(latAgencia)));
 
+            long telefonoContactoInteresado = prueba.getInteresado().getTelefonoContacto();
+
             // Comprobar si la posición está fuera del radio
             if (latitud < (latAgencia - radioLatitudGrados) || latitud > (latAgencia + radioLatitudGrados) ||
                     longitud < (lonAgencia - radioLongitudGrados) || longitud > (lonAgencia + radioLongitudGrados)) {
@@ -44,6 +46,7 @@ public class VehiculoService {
                 Notificacion notificacion = new Notificacion();
                 notificacion.setLegajo(empleado.getLegajo());
                 notificacion.setDescripcion("El vehiculo se encuentra fuera del radio permitido. Debe regresar.");
+                notificacion.setTelefonoContactoInteresado(telefonoContactoInteresado);
                 notificacionService.saveNotificacion(notificacion);
 
                 return "El vehiculo se encuentra fuera del radio permitido de 5 km alrededor de la Agencia.";
@@ -63,6 +66,7 @@ public class VehiculoService {
                     Notificacion notificacion = new Notificacion();
                     notificacion.setLegajo(empleado.getLegajo());
                     notificacion.setDescripcion("El vehiculo se encuentra en una zona restringida. Debe regresar.");
+                    notificacion.setTelefonoContactoInteresado(telefonoContactoInteresado);
                     notificacionService.saveNotificacion(notificacion);
                     return "El vehiculo se encuentra en una prueba y su posición está dentro de una zona restringida.";
                 }

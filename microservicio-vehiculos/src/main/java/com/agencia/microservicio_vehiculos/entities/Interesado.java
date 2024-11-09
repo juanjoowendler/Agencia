@@ -39,6 +39,9 @@ public class Interesado {
     @Column(name = "NRO_LICENCIA", unique = true)
     private long numeroLicencia;
 
+    @Column(name = "TELEFONO_CONTACTO")
+    private long telefonoContacto;
+
     @Column(name = "FECHA_VENCIMIENTO_LICENCIA")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaVencimientoLicencia;
