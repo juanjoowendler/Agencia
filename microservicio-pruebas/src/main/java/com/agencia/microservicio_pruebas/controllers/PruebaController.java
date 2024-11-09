@@ -4,7 +4,10 @@ import com.agencia.microservicio_pruebas.dtos.DetallesPruebaVehiculoDTO;
 import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
 import com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO;
 import com.agencia.microservicio_pruebas.dtos.KmRegistradosPorVehiculoDTO;
+import com.agencia.microservicio_pruebas.entities.Notificacion;
+import com.agencia.microservicio_pruebas.entities.NotificacionTelefono;
 import com.agencia.microservicio_pruebas.entities.Prueba;
+import com.agencia.microservicio_pruebas.services.NotificacionService;
 import com.agencia.microservicio_pruebas.services.PruebaService;
 import com.agencia.microservicio_pruebas.services.ReporteService;
 import com.agencia.microservicio_pruebas.services.VehiculoService;
@@ -30,6 +33,9 @@ public class PruebaController {
 
     @Autowired
     private VehiculoService vehiculoService;
+
+    @Autowired
+    private NotificacionService notificacionService;
 
     @GetMapping("/status")
     public ResponseEntity<String> status() {
@@ -150,6 +156,13 @@ public class PruebaController {
         // Genera el archivo Excel y escribe en la respuesta HTTP
         byte[] excelData = reporteService.generarReportePruebasVehiculo(pruebas);
         response.getOutputStream().write(excelData);
+    }
+
+    // PUNTO E
+    @PostMapping("/notificar")
+    public ResponseEntity<String> savePrueba(@RequestBody NotificacionTelefono notificacionTelefono) {
+        notificacionService.saveNotificacion(notificacionTelefono);
+        return ResponseEntity.ok("Usuarios notificados.");
     }
 
 
