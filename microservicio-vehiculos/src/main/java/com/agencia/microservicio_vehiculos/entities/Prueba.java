@@ -35,6 +35,9 @@ public class Prueba {
     @Column(name = "ACTIVA")
     private boolean activa;
 
+    @Column(name = "KM_REGISTRADOS")
+    private String kmRegistrados;
+
     @ManyToOne
     @JoinColumn(name = "ID_EMPLEADO", nullable = false)
     private Empleado empleado;
@@ -46,4 +49,9 @@ public class Prueba {
     @ManyToOne
     @JoinColumn(name = "ID_VEHICULO", nullable = false)
     private Vehiculo vehiculo;
+
+    // Getter redefinido
+    public String getKmRegistrados() {
+        return kmRegistrados + " Km";
+    }
 }

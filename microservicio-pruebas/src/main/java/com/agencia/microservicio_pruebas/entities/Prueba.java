@@ -2,10 +2,7 @@ package com.agencia.microservicio_pruebas.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -35,6 +32,9 @@ public class Prueba {
     @Column(name = "ACTIVA")
     private boolean activa;
 
+    @Column(name = "KM_REGISTRADOS")
+    private String kmRegistrados;
+
     @ManyToOne
     @JoinColumn(name = "ID_EMPLEADO", nullable = false)
     private Empleado empleado;
@@ -46,4 +46,9 @@ public class Prueba {
     @ManyToOne
     @JoinColumn(name = "ID_VEHICULO", nullable = false)
     private Vehiculo vehiculo;
+
+    // Getter redefinido
+    public String getKmRegistrados() {
+        return kmRegistrados + " Km";
+    }
 }

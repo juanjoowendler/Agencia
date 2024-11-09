@@ -2,6 +2,7 @@ package com.agencia.microservicio_pruebas.services;
 
 import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
 import com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO;
+import com.agencia.microservicio_pruebas.dtos.KmRegistradosPorVehiculoDTO;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
@@ -97,5 +98,39 @@ public class ReporteService {
         }
     }
 
+    // Km recorridos por un vehiculo en un periodo determinado
+    public byte[] generarReporteKmPorVehiculo(List<KmRegistradosPorVehiculoDTO> kmRegistrados) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Kilómetros por Vehículo");
 
+        // Encabezado
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("ID");
+        headerRow.createCell(1).setCellValue("Fecha Hora Inicio");
+        headerRow.createCell(2).setCellValue("Fecha Hora Fin");
+        headerRow.createCell(3).setCellValue("Patente");
+        headerRow.createCell(4).setCellValue("Kilómetros Registrados");
+
+        // Llenar con los datos
+        int rowNum = 1;
+        for (KmRegistradosPorVehiculoDTO dto : kmRegistrados) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(dto.getId());
+            row.createCell(1).setCellValue(dto.getFechaHoraInicio().toString());
+            row.createCell(2).setCellValue(dto.getFechaHoraFin().toString());
+            row.createCell(3).setCellValue(dto.getPatente());
+            row.createCell(4).setCellValue(dto.getKmRegistrados());
+        }
+
+        // Ajustar el tamaño de las columnas
+        for (int i = 0; i < 5; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        // Convertir a byte[] para escribir en la respuesta HTTP
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            workbook.write(outputStream);
+            return outputStream.toByteArray();
+        }
+    }
 }

@@ -2,9 +2,11 @@ package com.agencia.microservicio_pruebas.controllers;
 
 import com.agencia.microservicio_pruebas.dtos.IncidentesDTO;
 import com.agencia.microservicio_pruebas.dtos.IncidentesEmpleadoDTO;
+import com.agencia.microservicio_pruebas.dtos.KmRegistradosPorVehiculoDTO;
 import com.agencia.microservicio_pruebas.entities.Prueba;
 import com.agencia.microservicio_pruebas.services.PruebaService;
 import com.agencia.microservicio_pruebas.services.ReporteService;
+import com.agencia.microservicio_pruebas.services.VehiculoService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class PruebaController {
 
     @Autowired
     private ReporteService reporteService;
+
+    @Autowired
+    private VehiculoService vehiculoService;
 
     @GetMapping("/status")
     public ResponseEntity<String> status() {
@@ -102,6 +107,29 @@ public class PruebaController {
 
         // Generar el reporte y escribirlo en la respuesta HTTP
         byte[] excelData = reporteService.generarReporteIncidentesParaUnEmpleado(incidentesEmpleado);
+        response.getOutputStream().write(excelData);
+    }
+
+    // Km recorridos por un vehiculo en un periodo determinado
+    @GetMapping("/reporte/km-vehiculo/{id}")
+    public void generarReporteKmPorVehiculo(
+            @PathVariable("id") Long idVehiculo,
+            @RequestParam("fechaHoraInicio") String fechaHoraInicio,
+            @RequestParam("fechaHoraFin") String fechaHoraFin,
+            HttpServletResponse response) throws IOException {
+
+        LocalDateTime inicio = LocalDateTime.parse(fechaHoraInicio);
+        LocalDateTime fin = LocalDateTime.parse(fechaHoraFin);
+
+        // Obtener los kilómetros recorridos por el vehículo en el rango de fechas
+        List<KmRegistradosPorVehiculoDTO> kmRegistrados = vehiculoService.findKmRegistradosByVehicle(inicio, fin, idVehiculo);
+
+        // Configurar la respuesta HTTP para generar el archivo Excel
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=Reporte_Km_Vehiculo_" + idVehiculo + ".xlsx");
+
+        // Generar el reporte Excel y escribirlo en la respuesta HTTP
+        byte[] excelData = reporteService.generarReporteKmPorVehiculo(kmRegistrados);
         response.getOutputStream().write(excelData);
     }
 
