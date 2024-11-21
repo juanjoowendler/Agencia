@@ -27,28 +27,26 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        // Endpoints libres para cualquier usuario
-                        .requestMatchers("/pruebas/status").permitAll()
-                        .requestMatchers("/pruebas/listado").permitAll()
-                        .requestMatchers("/pruebas/en-curso").permitAll()
-                        .requestMatchers("/pruebas/{id}/finalizar").permitAll()
-                        .requestMatchers("/vehiculos/configuracion").permitAll()
-                        .requestMatchers("/vehiculos/status").permitAll()
+                        // ** Endpoints accesibles por EMPLEADO **
+                        .requestMatchers("/pruebas/status").hasAuthority("ROLE_EMPLEADO")
+                        .requestMatchers("/pruebas/listado").hasAuthority("ROLE_EMPLEADO")
+                        .requestMatchers("/pruebas/en-curso").hasAuthority("ROLE_EMPLEADO")
+                        .requestMatchers("/pruebas/{id}/finalizar").hasAuthority("ROLE_EMPLEADO")
+                        .requestMatchers("/vehiculos/configuracion").hasAuthority("ROLE_EMPLEADO")
+                        .requestMatchers("/vehiculos/status").hasAuthority("ROLE_EMPLEADO")
+                        .requestMatchers(HttpMethod.POST, "/pruebas").hasAuthority("ROLE_EMPLEADO")
+                        .requestMatchers(HttpMethod.POST, "/pruebas/notificar").hasAuthority("ROLE_EMPLEADO")
 
-                        // Endpoints permitidos solo para el rol EMPLEADO
-                        .requestMatchers(HttpMethod.POST, "/pruebas").hasRole("EMPLEADO")
-                        .requestMatchers(HttpMethod.POST, "/pruebas/notificar").hasRole("EMPLEADO")
+                        // ** Endpoints accesibles por VEHICULO **
+                        .requestMatchers(HttpMethod.POST, "/vehiculos/evaluar").hasAuthority("ROLE_VEHICULO")
 
-                        // Endpoints permitidos solo para el rol USUARIO
-                        .requestMatchers(HttpMethod.POST, "/vehiculos/evaluar").hasRole("USUARIO")
+                        // ** Endpoints accesibles por ADMIN **
+                        .requestMatchers("/pruebas/reporte/incidentes").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/pruebas/reporte/incidentes/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/pruebas/reporte/km-vehiculo/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/pruebas/reporte/detalle-vehiculo/**").hasAuthority("ROLE_ADMIN")
 
-                        // Endpoints permitidos solo para el rol ADMIN
-                        .requestMatchers("/pruebas/reporte/incidentes").hasRole("ADMIN")
-                        .requestMatchers("/pruebas/reporte/incidentes/**").hasRole("ADMIN")
-                        .requestMatchers("/pruebas/reporte/km-vehiculo/**").hasRole("ADMIN")
-                        .requestMatchers("/pruebas/reporte/detalle-vehiculo/**").hasRole("ADMIN")
-
-                        // Otros endpoints requieren autenticación
+                        // ** Endpoints accesibles por cualquier usuario autenticado **
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt ->
