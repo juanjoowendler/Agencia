@@ -3,6 +3,8 @@
 ### 📖 Overview
 This project involves the backend development for a used car sales agency, created as part of an integrative practical assignment. The system manages test drives, tracks vehicle locations in real time, and ensures operation within permitted zones and radii. Additionally, it implements notifications and restrictions to maximize security and operational control.
 
+
+![Project structure](public/project-presentation.jpg)
 ## 🚀 Key Features
 
 ### 1️⃣ Test Drive Management
