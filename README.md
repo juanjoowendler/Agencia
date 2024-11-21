@@ -23,7 +23,7 @@ This project involves the backend development for a used car sales agency, creat
   - Registering the customer in a restricted list (prohibited from future tests).
 
 ### 3️⃣ Notifications
-- Promotional notifications to customers (via database or external means such as SMS or email, depending on configuration).
+- Promotional notifications to customers stored in the database.
 
 ### 4️⃣ Reports
 Detailed generation of reports on:
@@ -46,9 +46,11 @@ Detailed generation of reports on:
   - Only administrators can generate reports.
 
 ## 🛠️ Project Architecture
-- Design based on **microservices**, ensuring modularity and scalability.
-- Use of an **API Gateway** as a single entry point.
-- Compliance with recommended service interaction guidelines.
+- **Backend Framework**: Built with **Java** and **Spring Boot**.
+- **Database**: Uses **SQLite** as the relational database.
+- **Architecture**: Based on **microservices** for modularity and scalability.
+- **API Gateway**: Serves as the single entry point for all requests.
+- **Service Integration**: Interacts with an external service for geographic data.
 
 ## 💾 Database Structure
 The database includes tables for:
@@ -76,9 +78,11 @@ Geographical area within which vehicles can operate without restrictions.
 For more details, visit the interactive map on [Google Earth](https://earth.google.com/earth/d/1MhR_sH8E4Rkww0rtBbOarKmjkQdc1RNU?usp=sharing). 🔗
 
 ## 🔗 Technical Requirements
-- Node.js / Express for the backend.
-- Use of external services for geographical data.
-- Microservices and API Gateway as core components.
-- Security implemented with role-based authentication and authorization.
+- **Programming Language**: Java.
+- **Framework**: Spring Boot for backend development.
+- **Database**: SQLite for data storage.
+- **Architecture**: Microservices with API Gateway for request management.
+- **Security**: Role-based authentication and authorization.
+- **External Integration**: Consumes geographic data from an external service.
 
 ---
