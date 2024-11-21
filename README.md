@@ -1,36 +1,84 @@
 # 🚗 Car Agency 
 
 ### 📖 Overview
-This document outlines the database structure for a car agency. It provides details on the various tables used to manage the agency's operations, including employees, interested customers, brands, models, notifications, vehicle positions, tests, and vehicles.
+Este proyecto corresponde al desarrollo del backend de una agencia de venta de vehículos usados, implementado como parte de un trabajo práctico integrador. El sistema permite gestionar pruebas de manejo, rastrear vehículos en tiempo real y garantizar que operen dentro de zonas y radios permitidos. Adicionalmente, implementa notificaciones y restricciones para maximizar la seguridad y control operativo.
 
-### 📋 Tables Description
+## 🚀 Funcionalidades Clave
 
-- **👨‍💼 Empleados**: Contains information about the employees working at the agency.
-- **🧑‍🤝‍🧑 Interesados**: Stores details about interested customers, including their documents and licenses.
-- **🏷️ Marcas**: Holds the different car brands available at the agency.
-- **🚘 Modelos**: Contains car models associated with each brand.
-- **📬 Notificaciones**: Manages notifications related to employees and other relevant information.
-- **📍 Posiciones**: Tracks the positions of vehicles, including their latitude and longitude.
-- **📝 Pruebas**: Records tests conducted on vehicles, including details about the employees and interested customers involved.
-- **🚗 Vehiculos**: Contains information about the vehicles available at the agency.
+### 1️⃣ Gestión de Pruebas de Manejo
+- Registro de pruebas asociando cliente, vehículo y empleado.
+- Validación de:
+  - Licencias de clientes (no vencidas).
+  - Estado del cliente (no restringido para realizar pruebas).
+  - Disponibilidad del vehículo para evitar pruebas simultáneas.
+- Finalización de pruebas con comentarios opcionales por parte del empleado.
 
-## 💾 Database Structure
+### 2️⃣ Rastreo y Seguridad de Vehículos
+- Recepción de coordenadas en tiempo real de los vehículos.
+- Validación de posición para:
+  - Detectar si un vehículo excede el radio permitido.
+  - Evitar ingreso a zonas restringidas definidas.
+- Generación de notificaciones automáticas:
+  - Al empleado responsable, para que retorne el vehículo.
+  - Registro del cliente en una lista de usuarios restringidos.
 
+### 3️⃣ Notificaciones
+- Envío de notificaciones promocionales a clientes (vía base de datos o medios externos como SMS o correo, según configuración).
+
+### 4️⃣ Reportes
+Generación de reportes detallados sobre:
+- **Incidentes**: Casos donde se excedieron los límites establecidos.
+- **Pruebas por Empleado**: Resumen de incidentes y pruebas realizadas.
+- **Distancias Recorridas**: Kilómetros cubiertos por cada vehículo en periodos específicos.
+- **Historial de Pruebas**: Detalle completo de pruebas realizadas para un vehículo específico.
+
+### 5️⃣ Consumo de Servicios Externos
+- Obtención de:
+  - Coordenadas de la agencia.
+  - Radio permitido para pruebas.
+  - Zonas restringidas.
+- Estos datos son consumidos a través de un servicio proporcionado por la cátedra.
+
+### 6️⃣ Seguridad
+- Implementación de mecanismos de autenticación y autorización:
+  - Solo empleados pueden crear pruebas y enviar notificaciones.
+  - Solo usuarios asociados a vehículos pueden reportar posiciones.
+  - Solo administradores pueden generar reportes.
+
+## 🛠️ Arquitectura del Proyecto
+- Diseño basado en **microservicios**, asegurando modularidad y escalabilidad.
+- Uso de un **API Gateway** como punto de entrada único.
+- Cumplimiento de lineamientos propuestos para la interacción entre servicios.
+
+## 💾 Estructura de la Base de Datos
+La base de datos incluye tablas para:
+- **👨‍💼 Empleados**: Información de los empleados de la agencia.
+- **🧑‍🤝‍🧑 Interesados**: Datos de clientes interesados, incluyendo documentos y licencias.
+- **🏷️ Marcas** y **🚘 Modelos**: Catálogo de marcas y modelos de vehículos.
+- **📬 Notificaciones**: Registro de notificaciones enviadas.
+- **📍 Posiciones**: Ubicaciones de los vehículos con coordenadas (latitud y longitud).
+- **📝 Pruebas**: Información detallada sobre pruebas de manejo.
+- **🚗 Vehículos**: Inventario de vehículos disponibles.
+
+### Diagrama de Base de Datos
 ![Car Agency Database Diagram](public/agencia-diagram.png)
 
-## 🌍 Restricted Zones and Allowed Radius
+## 🌍 Zonas Restringidas y Radio Permitido
 
-This section provides visuals illustrating the restricted zones and the radius within which vehicles are permitted to operate.
+### 🚫 Zonas Restringidas
+![Restricted Zones](public/google-earth/zonas-restringidas.jpg)  
+Zonas consideradas peligrosas donde los vehículos no pueden operar.
 
-###  🚫 Restricted Zones
-![Restricted Zones](public/google-earth/zonas-restringidas.jpg)
+### 🟢 Radio Permitido
+![Allowed Radius](public/google-earth/radio-adminito.jpg)  
+Área geográfica en la que los vehículos pueden operar sin restricciones.
 
-*This image shows the general layout of the restricted zones within the agency's operational area, highlighting where vehicles are not allowed to operate.*
+Para más detalles, visita el mapa interactivo en [Google Earth](https://earth.google.com/earth/d/1MhR_sH8E4Rkww0rtBbOarKmjkQdc1RNU?usp=sharing). 🔗
 
-### 🟢 Allowed Radius
-![Allowed Radius](public/google-earth/radio-adminito.jpg)
+## 🔗 Requerimientos Técnicos
+- Node.js / Express para el backend.
+- Uso de servicios externos para datos geográficos.
+- Microservicios y API Gateway como elementos fundamentales.
+- Seguridad con autenticación y autorización por roles.
 
-*This graphic depicts the radius within which vehicles are authorized to operate in relation to the agency. It outlines the permissible area surrounding the agency.*
-
-For more detailed geographic information, visit [Google Earth](https://earth.google.com/earth/d/1MhR_sH8E4Rkww0rtBbOarKmjkQdc1RNU?usp=sharing). 🔗
-
+---
